@@ -1,0 +1,44 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package arkolour;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import  java.io.*;
+ /*
+ * Jacopo "DarkFaust" Buttiglieri
+ */
+public class Audio {
+    
+    private Clip sounds[]=new Clip[5];
+    
+    public void loadSounds() throws Exception{
+        
+        AudioInputStream sound;
+
+
+
+        for(int i =1;i<6;i++)
+        {
+            sound=AudioSystem.getAudioInputStream(new File("snd/sound"+i+".wav"));
+            sounds[i-1] = (Clip) AudioSystem.getLine( new DataLine.Info(Clip.class, sound.getFormat()));
+            sounds[i-1].open(sound);
+        }
+
+    }
+    
+    public void playSound(int streamID)
+    {
+        // play the sound clip
+        if(sounds[streamID].isRunning())
+            sounds[streamID].stop();
+        sounds[streamID].setFramePosition(0);
+        sounds[streamID].start();
+    }
+    
+    
+}
